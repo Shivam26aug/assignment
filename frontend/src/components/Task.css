@@ -1,0 +1,44 @@
+.task-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.task-form,
+.task-item {
+  margin-bottom: 20px;
+}
+
+.task-form input,
+.task-form textarea,
+.task-form button {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.task-item .task-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item button {
+  margin-left: 10px;
+}
+
+.message {
+  color: green;
+  font-weight: bold;
+}

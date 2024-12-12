@@ -18,6 +18,7 @@ const tokenUtils_1 = require("../utils/tokenUtils");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log("reached here", req);
         const { email, password, role } = req.body;
         // Check if user already exists
         const existingUser = yield database_1.default.user.findUnique({ where: { email } });

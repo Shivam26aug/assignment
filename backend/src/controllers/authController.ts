@@ -3,8 +3,11 @@ import prisma from '../config/database';
 import { generateToken } from '../utils/tokenUtils';
 import bcrypt from 'bcryptjs';
 
+
 export const register = async (req: Request, res: Response):Promise<Response> => {
   try {
+
+    console.log("reached here", req)
     const { email, password, role } = req.body;
 
     // Check if user already exists
