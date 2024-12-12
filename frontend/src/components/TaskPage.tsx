@@ -16,7 +16,7 @@ const Task: React.FC = () => {
   const [newTask, setNewTask] = useState<Partial<Task>>({});
   const [editTask, setEditTask] = useState<Partial<Task> | null>(null);
   const [message, setMessage] = useState<string>("");
-
+  const [error, setError] = useState<string | null>(null);
   const token = localStorage.getItem("token");
 
   
@@ -54,6 +54,30 @@ const Task: React.FC = () => {
       setMessage("Task updated successfully.");
     } catch (error) {
       setMessage("Error updating task.");
+    }
+  };
+
+  const handleStatusChange = async (taskId: string, newStatus: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `/tasks/${taskId}`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update task status in the frontend
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === taskId ? { ...task, status: newStatus } : task
+        )
+      );
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Failed to update task");
     }
   };
 
@@ -116,6 +140,17 @@ const Task: React.FC = () => {
               <div className="task-info">
                 <h3>{task.title}</h3>
                 <p>{task.description}</p>
+                <div>
+              <label>Status:</label>
+              <select
+                value={task.status}
+                onChange={(e) => handleStatusChange(task.id, e.target.value)}
+              >
+                <option value="TODO">TODO</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="DONE">DONE</option>
+              </select>
+            </div>
                 <p>Priority: {task.priority}</p>
                 <p>Status: {task.status}</p>
                 <button onClick={() => setEditTask(task)}>Edit</button>
